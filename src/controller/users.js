@@ -4,7 +4,8 @@ const {
     mCheckEmail,
     mUpdateUser,
     mDetailUser,
-    mDeletePhoto
+    mDeletePhoto,
+    mListUser
 } = require ('../model/users')
 const { success, failed, notFound } = require('../helper/response')
 const jwt = require('jsonwebtoken')
@@ -220,6 +221,22 @@ module.exports = {
             })
         } catch (error) {
             failed(res, 'Internal server error', error)
+        }
+    },
+    listUsers: (req, res) => {
+        try {
+            mListUser()
+            .then((response)=>{
+                if(response.length > 0){
+                    success(res, response, {}, 'Get list users success')
+                }else{
+                    notFound(res,"Data unavailable", response)
+                }
+            }).catch(()=>{
+                failed(res, 'Internal server error', [])
+            })
+        } catch (error) {
+            failed(res, 'Internal server error', [])
         }
     }
 }

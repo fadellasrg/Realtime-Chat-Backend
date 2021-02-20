@@ -5,7 +5,8 @@ const {
     register,
     updateUser,
     getDetail,
-    deletePhoto
+    deletePhoto,
+    listUsers
 } = require('../controller/users')
 
 const { authentication } = require('../helper/middleware/auth')
@@ -19,5 +20,6 @@ Router
   .patch('/api/user/:id', singleUpload, authentication, updateUser)
   .get('/api/user/:id', authentication, getDetail)
   .get('/api/delete_photo/:id', authentication, deletePhoto)
+  .get('/api/users', authentication, listUsers)
 
 module.exports = Router
