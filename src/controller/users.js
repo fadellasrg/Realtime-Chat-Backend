@@ -54,7 +54,9 @@ module.exports = {
             password: body.password,
             image: 'default_photo.png',
             phone: '+62',
-            bio: 'Hello there!'
+            bio: 'Hello there!',
+            latitude: '3.596046803488549',
+            longitude: '98.67275547271525'
         }
         mCheckEmail(data.email).then( async (response) => {
             if(response.length >= 1){
@@ -73,7 +75,9 @@ module.exports = {
                     password,
                     image: data.image,
                     phone: data.phone,
-                    bio: data.bio
+                    bio: data.bio,
+                    latitude: data.latitude,
+                    longitude: data.longitude
                 }
                 if( !data.name || !data.email || !data.password){
                     failed(res, 'All textfield is required!', [])

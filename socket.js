@@ -14,19 +14,32 @@ module.exports = (server) => {
         socket.on('join-room', (room_id) => {
             socket.join(room_id)
         })
+        // bisaaaaa friends = user
+        // socket.on('get-list-friends', (idUser, roomId) => {
+        //     db.query(`SELECT * FROM users WHERE id != ${idUser}`, (err, result) => {
+        //         io.to(roomId).emit('res-get-list-friends', result)
+        //     })
+        // })
+        socket.on('get-list-friends', (idUser, roomId) => {
+            db.query(`SELECT * FROM users
+            WHERE id != ${idUser}
+            `, (err, result) => {
+                io.to(roomId).emit('res-get-list-friends', result)
+            })
+        })
     
+        // socket.on('get-list-users', (idUser, roomId) => {
+        //     db.query(`SELECT * FROM users WHERE id != ${idUser}`, (err, result) => {
+        //         io.to(roomId).emit('res-get-list-users', result)
+        //     })
+        // })
+        
         socket.on('get-list-users', (idUser, roomId) => {
-            db.query(`SELECT * FROM users WHERE id != ${idUser}`, (err, result) => {
+            db.query(`SELECT * FROM users LEFT JOIN friends ON users.id = friends.id_user
+            WHERE friends.id_friend = ${idUser}`, (err, result) => {
                 io.to(roomId).emit('res-get-list-users', result)
             })
         })
-        // socket.on('get-list-users', (idUser, roomId) => {
-        //     db.query(`SELECT * FROM users LEFT JOIN friends ON users.id = friends.id_user
-        //     WHERE friends.id_friend = ${idUser}`, (err, result) => {
-        //         io.to(roomId).emit('res-get-list-users', result)
-        //         console.log(roomId)
-        //     })
-        // })
     
         socket.on('get-list-chat', (user) => {
             db.query(`SELECT chat.created_at, chat.from_id, chat.to_id, chat.message, user_from.name as from_name, user_from.room_id as from_room_id, user_to.image as image, user_to.room_id as to_room_id FROM chat LEFT JOIN users as user_from ON chat.from_id=user_from.id LEFT JOIN users as user_to ON chat.to_id = user_to.id 
@@ -48,6 +61,20 @@ module.exports = (server) => {
                     io.to(result[0].from_room_id).emit('res-get-list-chat', result)
                     io.to(result[0].to_room_id).emit('res-get-list-chat', result)
                 })
+            })
+        })
+
+        socket.on('add-friend', (data) => {
+            db.query(`INSERT INTO friends 
+            (id_user, id_friend) VALUES
+            ('${data.id_user}', '${data.id_friend}'),
+            ('${data.id_friend}', '${data.id_user}') `
+            , (err, result) => {
+                if(err){
+                    console.log(err)
+                }else{
+                    console.log(result)
+                }
             })
         })
     
