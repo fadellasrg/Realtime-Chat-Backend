@@ -93,65 +93,6 @@ module.exports = {
             failed(res, 'Internal server error', err)
         })
     },
-    // updateUser: async (req, res) => {
-    //     try {
-    //         const body = req.body;
-    //         const id = req.params.id
-    //         const detail = await mDetailUser(id)
-    //         if (req.file) {
-    //             const data = { ...body, image: req.file.filename };
-    //             if (detail[0].image === 'default_photo.png') {
-    //                 mUpdateUser(data, id)
-    //                     .then((response) => {
-    //                         success(res, response, {}, 'Update User success')
-    //                     }).catch((err) => {
-    //                         failed(res, 'All textfield is required!', err)
-    //                     })
-    //             }
-    //              else if (req.file === null || req.file === '') {
-    //                 mUpdateUser(data, id)
-    //                     .then((response) => {
-    //                         success(res, response, {}, 'Update User success')
-    //                     }).catch((err) => {
-    //                         failed(res, 'All textfield is required!', err)
-    //                     })
-    //             } 
-    //             else {
-    //                 const path = `./public/images/${detail[0].image}`
-    //                 fs.unlinkSync(path)
-    //                 mUpdateUser(data, id)
-    //                     .then((response) => {
-    //                         success(res, response, {}, 'Update User success')
-    //                     }).catch(() => {
-    //                         failed(res, 'Can\'t connect to database', [])
-    //                     })
-    //             }
-    //         } else {
-    //             const data = { ...body, image: 'default_photo.png' };
-    //             if (detail[0].image === 'default_photo.png') {
-    //                 mUpdateUser(data, id)
-    //                     .then((response) => {
-    //                         success(res, response, {}, 'Update User success')
-    //                     }).catch((err) => {
-    //                         console.log(body)
-    //                         failed(res, 'All textfield is required!', err)
-    //                     })
-    //             } else {
-    //                 const path = `./public/images/${detail[0].image}`
-    //                 fs.unlinkSync(path)
-    //                 mUpdateUser(data, id)
-    //                     .then((response) => {
-    //                         success(res, response, {}, 'Update User success')
-    //                     }).catch(() => {
-    //                         failed(res, 'Can\'t connect to database', [])
-    //                     })
-    //             }
-    //         }
-    //     } catch (error) {
-    //         // failed(res, 'Error server', error)
-    //         console.log(error)
-    //     }
-    // },
     updateUser: async (req, res) => {
         try {
             const data = req.body
@@ -164,17 +105,20 @@ module.exports = {
                     .then((response)=>{
                         success(res, response, {}, 'Update profile success')
                     }).catch((err)=>{
-                        failed(res, 'Internal server error', [])
+                        // failed(res, 'Internal server error', [])
                     }) 
                 }else{
                     data.image = req.file.filename
                     const path = `./public/images/${detail[0].image}`
-                    fs.unlinkSync(path)
+                    if (fs.existsSync(path)) {
+                        fs.unlinkSync(path)
+                    }
                     mUpdateUser(data, id)
                     .then((response)=>{
                         success(res, response, {}, 'Update profile success')
                     }).catch((err)=>{
-                        failed(res, 'Internal server error', [])
+                        // failed(res, 'Internal server error', [])
+                        console.log(err)
                     }) 
                 }
             }else{
@@ -182,11 +126,13 @@ module.exports = {
                 .then((response)=>{
                     success(res, response, {}, 'Update profile success')
                 }).catch((err)=>{
-                    failed(res, 'Internal server error', [])
+                    // failed(res, 'Internal server error', [])
+                    console.log(err)
                 })
             }
         } catch (error) {
-            failed(res, 'Internal server error', [])
+            // failed(res, 'Internal server error', [])
+            console.log(error)
         }
     },
     getDetail: (req, res)=>{

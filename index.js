@@ -2,8 +2,8 @@ const express = require('express')
 const http = require('http')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const PORT = 4000
-const socket = require('./socket')
+const { PORT } = require('./src/helper/env')
+const socket = require('./src/helper/socket')
 
 const userRoute = require('./src/route/users')
 
