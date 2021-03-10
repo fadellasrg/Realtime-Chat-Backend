@@ -1,7 +1,8 @@
 # Realtime Chat
-Realtime Chat is an app that provides chat features for users. This app also has other features such as adding a friend list, update profile, view friend's profile, and user's location. 
+Realtime Chat is an app that provides personal chat features for users using socket.io. This app also has other features such as adding a friend list, update profile, view friend's profile, and user's location. 
 This is the backend service for this app. You can see the frontend service [here](https://github.com/fadellasrg/Realtime-Chat-Frontend).
 
+---
 ## Modules
 1. [Bcrypt](https://www.npmjs.com/package/bcrypt)
 2. [Body-parser](https://www.npmjs.com/package/body-parser)
@@ -14,6 +15,7 @@ This is the backend service for this app. You can see the frontend service [here
 9. [Mysql2](https://www.npmjs.com/package/mysql2)
 10. [Nodemon](https://www.npmjs.com/package/nodemon)
 
+---
 ## How to use?
 1. Clone this repository with `git clone https://github.com/fadellasrg/Realtime-Chat-Backend`.
 2. Run `npm install` to install modules required.
@@ -26,6 +28,7 @@ This is the backend service for this app. You can see the frontend service [here
     - `JWT_SECRET` = fill with the unique value due to signature verifier on JWT.
 5. Run `npm run start`
 
+---
 ## Documentation
 - [Postman](https://documenter.getpostman.com/view/13713483/Tz5nbdwB)
 - [Frontend](https://github.com/fadellasrg/Realtime-Chat-Frontend)
