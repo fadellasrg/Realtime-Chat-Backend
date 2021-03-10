@@ -32,4 +32,4 @@ This is the backend service for this app. You can see the frontend service [here
 ## Documentation
 - [Postman](https://documenter.getpostman.com/view/13713483/Tz5nbdwB)
 - [Frontend](https://github.com/fadellasrg/Realtime-Chat-Frontend)
-- [Deploy]
+- [Deploy](https://bit.ly/Realtime-Chat)
